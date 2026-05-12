@@ -1,0 +1,11 @@
+question_id,human_winner,confidence,notes
+1,A,high,A quotes the exact figure from the document; B paraphrases incorrectly
+2,B,medium,B provides more complete context about the tax period
+3,tie,low,Both answers are equivalent in quality and accuracy
+4,A,high,A directly answers with the correct tax code; B adds irrelevant detail
+5,B,high,B includes supporting calculation that validates the answer
+6,A,medium,A is more concise and on-point
+7,tie,medium,Both miss the cross-document context needed for full answer
+8,B,high,B correctly synthesizes from multiple sections of BCTC
+9,A,high,A quotes directly from Nghị định; B hallucinates a clause number
+10,B,medium,B has better structure and clearer explanation

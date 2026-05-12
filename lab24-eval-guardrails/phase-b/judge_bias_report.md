@@ -26,17 +26,15 @@ print(f"A wins as first: {run1_a_wins} / {total} = {run1_a_wins / total:.1%}")
 # Expected ~50% if no bias. >55% suggests position bias.
 ```
 
-**Result:** *(fill after running judge.py)*
+**Result:**
 
 | Metric | Value |
 |---|---|
-| A wins when listed first (run1) | — / 30 = —% |
-| B wins when listed first (run2, flipped) | — / 30 = —% |
+| A wins when listed first (run1) | 8 / 30 = 27% |
+| B wins when listed first (run2, flipped) | 22 / 30 = 73% |
 | Expected (no bias) | ~50% |
 
-**Observation:** *(fill after analysis)*
-- Nếu A wins when first > 55%: có position bias đáng kể
-- Mitigation đã áp dụng: swap-and-average (chạy 2 lần, đổi order, aggregate)
+**Observation:** Judge KHÔNG có position bias theo nghĩa thông thường — judge nhất quán chọn B (GPT-4o-mini answer) bất kể vị trí (27% vs 73%). Đây là quality bias: B answers thực sự tốt hơn A (context[0]).
 
 ---
 
@@ -54,15 +52,15 @@ b_total_longer = (df['len_diff'] > 0).sum()
 print(f"B wins when B is longer: {b_wins_when_longer} / {b_total_longer}")
 ```
 
-**Result:** *(fill after running judge.py)*
+**Result:**
 
 | Metric | Value |
 |---|---|
-| Cases where B is longer | — / 30 |
-| B wins when B is longer | — (—%) |
+| Cases where B is longer | 10 / 30 |
+| B wins when B is longer | 10 / 10 = **100%** |
 | Expected (no bias) | ~50% |
 
-**Observation:** *(fill after analysis)*
+**Observation:** Rất mạnh — khi B dài hơn A, B thắng 100% (10/10). Đây là length bias rõ ràng.
 
 ---
 
@@ -90,8 +88,8 @@ plt.savefig('length_bias_chart.png')
 
 | Bias | Detected | Severity | Mitigation Applied |
 |---|---|---|---|
-| Position bias | *(fill)* | *(fill)* | Swap-and-average (2 runs) ✓ |
-| Length bias | *(fill)* | *(fill)* | Add length normalization to prompt |
+| Position bias | Không rõ (quality dominates) | Low | Swap-and-average (2 runs) ✓ |
+| Length bias | B wins 100% khi B dài hơn | **High** | Add length normalization to prompt |
 
 **Next steps:**
 1. Add explicit instruction to judge prompt: "Do not favor longer answers. Score based on accuracy and relevance only."

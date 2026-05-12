@@ -57,7 +57,7 @@ async def audit_log(user_input: str, answer: str, timings: dict) -> None:
         "answer": answer[:200],
         "timings": timings,
     }
-    with open(AUDIT_LOG_PATH, 'a') as f:
+    with open(AUDIT_LOG_PATH, 'a', encoding='utf-8') as f:
         f.write(json.dumps(entry, ensure_ascii=False) + '\n')
 
 

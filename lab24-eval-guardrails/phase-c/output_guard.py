@@ -1,8 +1,6 @@
 """
-Task C.4 — Output Guardrail: Llama Guard 3
-Uses Groq API (Option B — no GPU required).
-
-Requires: GROQ_API_KEY in .env
+Task C.4 — Output Guardrail: OpenAI Moderation API
+(Groq Llama Guard decommissioned Mar 2026 — replaced with openai/moderations)
 
 Run:
     python phase-c/output_guard.py
@@ -24,35 +22,35 @@ import numpy as np
 
 
 class OutputGuardAPI:
-    """Uses Groq API for Llama Guard 3 inference."""
+    """Uses OpenAI Moderation API for content safety (replaces decommissioned Groq Llama Guard)."""
 
-    MODEL = "llama-guard-3-8b"
-    URL = "https://api.groq.com/openai/v1/chat/completions"
+    URL = "https://api.openai.com/v1/moderations"
 
     def __init__(self, api_key: str = None):
-        self.api_key = api_key or os.getenv("GROQ_API_KEY", "")
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY", "")
         if not self.api_key:
-            raise ValueError("GROQ_API_KEY not set. Add to .env or environment.")
+            raise ValueError("OPENAI_API_KEY not set.")
 
     def check(self, user_input: str, agent_response: str) -> tuple[bool, str, float]:
         """Returns (is_safe, raw_result, latency_ms)."""
-        payload = {
-            "model": self.MODEL,
-            "messages": [
-                {"role": "user", "content": user_input},
-                {"role": "assistant", "content": agent_response},
-            ],
-        }
-        headers = {"Authorization": f"Bearer {self.api_key}"}
+        text = f"{user_input}\n{agent_response}"
+        headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
 
         start = time.perf_counter()
-        resp = requests.post(self.URL, json=payload, headers=headers, timeout=30)
+        for attempt in range(3):
+            resp = requests.post(self.URL, json={"input": text}, headers=headers, timeout=30)
+            if resp.status_code < 500:
+                break
+            time.sleep(2 ** attempt)
         latency_ms = (time.perf_counter() - start) * 1000
 
-        resp.raise_for_status()
-        result = resp.json()['choices'][0]['message']['content']
-        is_safe = "safe" in result.lower() and "unsafe" not in result.lower()
-        return is_safe, result, latency_ms
+        if not resp.ok:
+            raise RuntimeError(f"OpenAI moderation {resp.status_code}: {resp.text[:200]}")
+        result = resp.json()['results'][0]
+        is_safe = not result['flagged']
+        flagged_cats = [k for k, v in result['categories'].items() if v]
+        summary = "safe" if is_safe else f"unsafe: {flagged_cats}"
+        return is_safe, summary, latency_ms
 
     async def check_async(self, user_input: str, agent_response: str) -> tuple[bool, str, float]:
         import asyncio

@@ -43,23 +43,24 @@ python scripts/run_eval.py --threshold faithfulness=0.70
 
 ### Phase A (RAGAS)
 
-- Test set: 50 questions (50% simple, 25% reasoning, 25% multi-context)
-- Faithfulness: *(fill)* | AR: *(fill)* | CP: *(fill)* | CR: *(fill)*
-- Total eval cost: $*(fill)*
-- Identified 3 failure clusters (see phase-a/failure_analysis.md)
+- Test set: 51 questions (mixed simple/reasoning/multi-context)
+- Faithfulness: 0.5358 | AR: 0.4087 | CP: 0.6895 | CR: 0.5350
+- Total eval cost: ~$0.50 (gpt-4o-mini, 204 metric evaluations)
+- Identified failure clusters: low faithfulness (naive context[0] answer), poor answer relevancy (no LLM generation), see phase-a/failure_analysis.md
 
 ### Phase B (LLM-Judge)
 
-- Cohen's kappa vs human: *(fill)* — *(interpretation)*
+- Cohen's kappa vs human: -0.167 — WORSE than chance (judge has strong domain/position bias)
 - Position bias mitigated via swap-and-average (2 runs per pair)
-- Length bias: *(fill)* (B wins when longer)
+- Mean absolute score (GPT-4o-mini answers): 3.54/5.0
 
 ### Phase C (Guardrails)
 
-- PII detection rate: *(fill)*% (10/10 EN, VN inputs)
-- Topic validator: *(fill)*% accuracy (20 inputs)
-- Adversarial defense: *(fill)*% (x/20)
-- Llama Guard latency P95: *(fill)*ms
+- PII detection rate: 70% (7/10)
+- Topic validator: 50% accuracy (10/20 — on-topic 100%, off-topic 0%)
+- Adversarial defense: 0% (rule-based approach insufficient)
+- Output guard (OpenAI Moderation): detection 80%, FP 0%, P95 977ms
+- Full pipeline P95: L1=742ms, L2=7239ms, L3=792ms
 
 ### Phase D (Blueprint)
 

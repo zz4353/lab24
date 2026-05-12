@@ -93,13 +93,9 @@ def main():
     scores_df.to_csv(RESULTS_PATH, index=False)
     print(f"Saved per-question results to {RESULTS_PATH}")
 
-    scores_dict = scores.scores if hasattr(scores, 'scores') else dict(scores)
-    summary = {
-        'faithfulness': float(scores_dict.get('faithfulness', 0)),
-        'answer_relevancy': float(scores_dict.get('answer_relevancy', 0)),
-        'context_precision': float(scores_dict.get('context_precision', 0)),
-        'context_recall': float(scores_dict.get('context_recall', 0)),
-    }
+    scores_df = pd.read_csv(RESULTS_PATH)
+    summary = {m: float(scores_df[m].mean()) if m in scores_df.columns else 0.0
+               for m in ['faithfulness', 'answer_relevancy', 'context_precision', 'context_recall']}
     with open(SUMMARY_PATH, 'w') as f:
         json.dump(summary, f, indent=2)
     print(f"Saved summary to {SUMMARY_PATH}")

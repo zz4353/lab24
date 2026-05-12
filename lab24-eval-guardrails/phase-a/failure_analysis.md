@@ -8,18 +8,16 @@ Phân tích bottom 10 questions có điểm thấp nhất (average across 4 RAGA
 
 | # | Question (truncated) | Type | F | AR | CP | CR | Avg | Cluster |
 |---|---|---|---|---|---|---|---|---|
-| 1 | *(fill after running run_ragas.py)* | reasoning | — | — | — | — | — | C1 |
-| 2 | *(fill after running run_ragas.py)* | multi_context | — | — | — | — | — | C1 |
-| 3 | *(fill after running run_ragas.py)* | reasoning | — | — | — | — | — | C1 |
-| 4 | *(fill after running run_ragas.py)* | multi_context | — | — | — | — | — | C2 |
-| 5 | *(fill after running run_ragas.py)* | simple | — | — | — | — | — | C2 |
-| 6 | *(fill after running run_ragas.py)* | reasoning | — | — | — | — | — | C1 |
-| 7 | *(fill after running run_ragas.py)* | multi_context | — | — | — | — | — | C2 |
-| 8 | *(fill after running run_ragas.py)* | simple | — | — | — | — | — | C3 |
-| 9 | *(fill after running run_ragas.py)* | reasoning | — | — | — | — | — | C1 |
-| 10 | *(fill after running run_ragas.py)* | multi_context | — | — | — | — | — | C2 |
-
-*(Điền sau khi chạy `run_ragas.py` và phân tích `ragas_results.csv`)*
+| 1 | What measures are required for the processing of sensit... | reasoning | 0.0 | 0.0 | 0.0 | 0.0 | 0.00 | C1 |
+| 2 | What are the responsibilities of data controllers in en... | reasoning | 0.0 | 0.0 | 0.0 | 0.0 | 0.00 | C1 |
+| 3 | What are the requirements for obtaining consent from th... | reasoning | 0.0 | 0.0 | 0.0 | 0.0 | 0.00 | C1 |
+| 4 | What measures are in place to ensure the protection of... | multi_context | 0.0 | 0.0 | 0.0 | 0.25 | 0.06 | C2 |
+| 5 | What are the necessary steps for ensuring compliance wh... | multi_context | 0.0 | 0.0 | 0.0 | 0.33 | 0.08 | C2 |
+| 6 | How does the responsibility for protecting personal dat... | reasoning | 0.0 | 0.0 | 0.0 | 0.50 | 0.12 | C1 |
+| 7 | What is the significance of the Bộ luật Dân sự in relat... | simple | 0.0 | 0.0 | 0.58 | 0.0 | 0.15 | C3 |
+| 8 | What commitments do organizations have regarding the pr... | multi_context | 0.0 | 0.0 | 0.0 | 0.67 | 0.17 | C2 |
+| 9 | What responsibilities does the data controller have reg... | reasoning | 0.0 | 0.0 | 0.0 | 0.67 | 0.17 | C1 |
+| 10 | Mục đích xử lý dữ liệu cá nhân là gì? | simple | 0.0 | 0.0 | 1.0 | 0.0 | 0.25 | C3 |
 
 ---
 

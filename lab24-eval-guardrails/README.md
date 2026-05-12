@@ -72,4 +72,4 @@ See [phase-d/blueprint.md](phase-d/blueprint.md) — SLOs, architecture diagram,
 
 ## Demo Video
 
-*(Fill link YouTube hoặc path file)*
+[video.mp4](../video.mp4)
